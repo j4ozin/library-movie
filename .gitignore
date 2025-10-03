@@ -1,0 +1,79 @@
+# Compiled output
+/dist
+/tmp
+/out-tsc
+# Only exists if Bazel was run
+/bazel-out
+
+# Node
+/node_modules
+npm-debug.log
+yarn-error.log
+
+# IDEs and editors
+.idea/
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+.vscode/
+*.sublime-workspace
+
+# Visual Studio Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/*
+
+# Miscellaneous
+/.angular/cache
+.sass-cache/
+/connect.lock
+/coverage
+/libpeerconnection.log
+testem.log
+/typings
+
+# System files
+.DS_Store
+Thumbs.db
+
+# ====================================
+# 📋 DOCUMENTAÇÃO TÉCNICA CONFIDENCIAL
+# ====================================
+
+# 🔐 Toda a pasta docs/ (contém chaves e detalhes técnicos)
+docs/
+
+# 🔑 Arquivos de configuração com credenciais
+src/app/config/api-config.ts
+src/app/utils/api-test.ts
+
+# 📊 Logs de desenvolvimento
+*.log
+logs/
+
+# 🧪 Arquivos de teste temporários
+test-results/
+coverage/
+
+# ⚙️ Arquivos de configuração local
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# 📱 Build para diferentes plataformas
+/android
+/ios
+/platforms
+/plugins
+
+# 🎯 Arquivos específicos do projeto
+src/assets/temp/
+*.tmp
+*.temp

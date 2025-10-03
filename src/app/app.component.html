@@ -1,0 +1,135 @@
+<div class="app-container">
+  <!-- Header -->
+  <header class="header">
+    <div class="container">
+      <h1 class="app-title">🎬 Library Movie</h1>
+      <p class="app-subtitle">Encontre seus filmes favoritos</p>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="container">
+      <!-- Search Section -->
+      <section class="search-section">
+        <div class="search-container">
+          <h2 class="search-title">Buscar Filme</h2>
+          <div class="search-form">
+            <input 
+              type="text" 
+              class="search-input"
+              placeholder="Digite o nome do filme..."
+              [(ngModel)]="searchTerm"
+              (keyup.enter)="searchMovies()"
+              #searchInput>
+            <button 
+              class="search-button"
+              (click)="searchMovies()"
+              [disabled]="!searchTerm || isLoading">
+              <span *ngIf="!isLoading">🔍 Buscar</span>
+              <span *ngIf="isLoading" class="loading-spinner">⏳ Buscando...</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- API Configuration Section (shown when API is not configured) -->
+      <!-- <section class="api-config" *ngIf="!isApiConfigured && !hideApiConfig">
+        <div class="config-card">
+          <h3>⚠️ API não configurada</h3>
+          <p>Para usar o sistema, você precisa configurar a chave da API.</p>
+          <button class="config-button" (click)="hideApiConfig = true">
+            Entendi, vou configurar depois
+          </button>
+        </div>
+      </section> -->
+
+      <!-- API Status Section (when API is configured) -->
+      <!-- <section class="api-status" *ngIf="isApiConfigured">
+        <div class="status-card">
+          <h3>✅ API Configurada</h3>
+          <p>Sistema conectado com OMDB API</p>
+          <button class="test-button" (click)="testApiConnection()">
+            🧪 Testar Conexão
+          </button>
+        </div>
+      </section> -->
+
+      <!-- Error Message -->
+      <section class="error-section" *ngIf="errorMessage">
+        <div class="error-card">
+          <h3>❌ Erro</h3>
+          <p>{{ errorMessage }}</p>
+          <button class="retry-button" (click)="clearError()">Tentar novamente</button>
+        </div>
+      </section>
+
+      <!-- Loading Section -->
+      <section class="loading-section" *ngIf="isLoading">
+        <div class="loading-card">
+          <div class="loading-animation">🎬</div>
+          <p>Buscando filmes...</p>
+        </div>
+      </section>
+
+      <!-- Movies Results -->
+      <section class="results-section" *ngIf="movies.length > 0 && !isLoading">
+        <h2 class="results-title">Resultados da busca "{{ lastSearchTerm }}"</h2>
+        <div class="movies-grid">
+          <div class="movie-card" *ngFor="let movie of movies" (click)="selectMovie(movie)">
+            <div class="movie-poster">
+              <img 
+                [src]="movie.Poster !== 'N/A' ? movie.Poster : 'assets/no-poster.jpg'" 
+                [alt]="movie.Title"
+                (error)="onImageError($event)">
+            </div>
+            <div class="movie-info">
+              <h3 class="movie-title">{{ movie.Title }}</h3>
+              <p class="movie-year">{{ movie.Year }}</p>
+              <p class="movie-type">{{ movie.Type | titlecase }}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- No Results -->
+      <section class="no-results" *ngIf="searchPerformed && movies.length === 0 && !isLoading && !errorMessage">
+        <div class="no-results-card">
+          <h3>🔍 Nenhum resultado encontrado</h3>
+          <p>Não encontramos filmes com o termo "{{ lastSearchTerm }}"</p>
+          <p>Tente buscar com termos diferentes.</p>
+        </div>
+      </section>
+
+      <!-- Selected Movie Details -->
+      <section class="movie-details" *ngIf="selectedMovie">
+        <div class="details-card">
+          <button class="close-button" (click)="closeDetails()">✕</button>
+          <div class="details-content">
+            <div class="details-poster">
+              <img 
+                [src]="selectedMovie.Poster !== 'N/A' ? selectedMovie.Poster : 'assets/no-poster.jpg'" 
+                [alt]="selectedMovie.Title">
+            </div>
+            <div class="details-info">
+              <h2>{{ selectedMovie.Title }}</h2>
+              <p><strong>Ano:</strong> {{ selectedMovie.Year }}</p>
+              <p *ngIf="selectedMovie.Director"><strong>Diretor:</strong> {{ selectedMovie.Director }}</p>
+              <p *ngIf="selectedMovie.Actors"><strong>Atores:</strong> {{ selectedMovie.Actors }}</p>
+              <p *ngIf="selectedMovie.Genre"><strong>Gênero:</strong> {{ selectedMovie.Genre }}</p>
+              <p *ngIf="selectedMovie.imdbRating"><strong>Nota IMDB:</strong> {{ selectedMovie.imdbRating }}/10</p>
+              <p *ngIf="selectedMovie.Plot" class="plot"><strong>Sinopse:</strong> {{ selectedMovie.Plot }}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2025 Library Movie - João Basante, A Besta Enjaulada</p>
+    </div>
+  </footer>
+</div>
